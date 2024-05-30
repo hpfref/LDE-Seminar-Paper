@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.26)  26 MAY 2024 23:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  30 MAY 2024 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -916,9 +916,9 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 38.
+(Font)              scaled to size 17.28pt on input line 40.
 LaTeX Font Info:    Trying to load font information for T1+LinuxBiolinumT-TLF o
-n input line 38.
+n input line 40.
 
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/latex/libertine\t1linuxbiolin
 umt-tlf.fd
@@ -926,31 +926,35 @@ File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 38.
+(Font)              scaled to size 17.28pt on input line 40.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 17.28pt on input line 38.
+(Font)              scaled to size 17.28pt on input line 40.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/it' in size <17.28> not
  available
 (Font)              Font shape `T1/LinuxBiolinumT-TLF/b/sl' tried instead on in
-put line 38.
+put line 40.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/sl' will be
-(Font)              scaled to size 17.28pt on input line 38.
+(Font)              scaled to size 17.28pt on input line 40.
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
+(Font)              scaled to size 9.0pt on input line 40.
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
+(Font)              scaled to size 12.0pt on input line 40.
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 12.0pt on input line 40.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 38.
+(Font)              scaled to size 12.0pt on input line 40.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 10.0pt on input line 40.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 38.
+(Font)              scaled to size 10.0pt on input line 40.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.8pt on input line 38.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.6pt on input line 38.
 
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
@@ -958,8 +962,10 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 7.0pt on input line 40.
 LaTeX Font Info:    Trying to load font information for TS1+LinuxLibertineT-TLF
- on input line 38.
+ on input line 40.
 
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/latex/libertine\ts1linuxliber
 tinet-tlf.fd
@@ -967,47 +973,38 @@ File: TS1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for TS1/
 LinuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.8pt on input line 38.
+(Font)              scaled to size 7.0pt on input line 40.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 38.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 38.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 38.
-LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 38.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.0pt on input line 38.
-LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 38.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 38.
+(Font)              scaled to size 9.0pt on input line 40.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 38.
+(Font)              scaled to size 10.95pt on input line 40.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 38.
+(hyperref)                removing `\\' on input line 40.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 38.
+(hyperref)                removing `\\' on input line 40.
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 38.
+(Font)              scaled to size 8.0pt on input line 40.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 38.
+(Font)              scaled to size 8.0pt on input line 40.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 38.
+(Font)              scaled to size 8.0pt on input line 40.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 38.
+(Font)              scaled to size 8.0pt on input line 40.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 38.
+(Font)              scaled to size 6.2pt on input line 40.
 No file paper.bbl.
+
+Overfull \vbox (2.08142pt too high) has occurred while \output is active []
+
 
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
@@ -1018,12 +1015,12 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 ) [1.1{C:/Users/hajap/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/User
 s/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc
 }{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_7
-6gpa5.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/liberti
-ne/lbtn_naooyc.enc}
+6gpa5.enc}
 
 {C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_nh
 77jq.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertin
-e/lbtn_7grukw.enc}] (paper.aux)
+e/lbtn_7grukw.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips
+/libertine/lbtn_naooyc.enc}] (paper.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-04-11>
@@ -1032,22 +1029,24 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 78F2CD356933A03733DC75583794B157;387.
  ) 
 Here is how much of TeX's memory you used:
- 20798 strings out of 474370
- 337168 string characters out of 5740535
- 1941754 words of memory out of 5000000
- 42480 multiletter control sequences out of 15000+600000
- 690663 words of font info for 242 fonts, out of 8000000 for 9000
+ 20738 strings out of 474370
+ 335829 string characters out of 5740535
+ 1946754 words of memory out of 5000000
+ 42420 multiletter control sequences out of 15000+600000
+ 686103 words of font info for 217 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,11n,131p,1004b,646s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,11n,131p,1100b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/Li
-nBiolinumTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/publi
-c/libertine/LinBiolinumTBO.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/libertine/LinLibertineT.pfb><C:/Users/hajap/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb><C:/Users/hajap/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTI.pfb>
-Output written on paper.pdf (1 page, 362597 bytes).
+nBiolinumT.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/libertine/LinBiolinumTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/font
+s/type1/public/libertine/LinBiolinumTBO.pfb><C:/Users/hajap/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/libertine/LinLibertineT.pfb><C:/Users/hajap/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb><C:/Us
+ers/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLiberti
+neTI.pfb>
+Output written on paper.pdf (1 page, 406591 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
+ 77 PDF objects out of 1000 (max. 8388607)
  8 named destinations out of 1000 (max. 500000)
- 81969 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 73777 words of extra memory for PDF output out of 74296 (max. 10000000)
 

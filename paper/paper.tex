@@ -18,9 +18,11 @@
 
 
 \title{Summary Paper of \\ \textit{Don’t Hold My Data Hostage – \\A Case For Client Protocol Redesign}}
+\subtitle{Authors of Original Paper: Mark Raasveldt and Hannes Mühleisen}
+
 
 \author{Hannes Pohnke}
-\authornote{Authors of summarized Paper: Mark Raasveldt and Hannes Mühleisen.}
+%\authornote{Authors of summarized Paper: Mark Raasveldt and Hannes Mühleisen.}
 \email{pohnke@tu-berlin.de}
 \affiliation{
   \institution{TU Berlin}
@@ -30,10 +32,10 @@
 
 
 \begin{abstract}
-This paper provides a detailed summary and analysis of "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign". The original paper discusses [main topic] and introduces [key contributions].
+Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" by Mark Raasveldt and Hannes Muhleisen, addresses this problem by investigating the high cost of transferring large data from databases to the client programs, which can be much more time consuming than the actual query execution. The authors explore and analyse current serialization methods, that are used in database systems and identify their inefficiencies through various experiments. They also introduce a new columnar serialization method that can significantly enhance data transfer performance. By improving the data transfer, this approach could be a step towards efficiently combining database and machine learning systems.
 \end{abstract}
 
-\keywords{Summary}
+\keywords{Databases, Client Protocols, Data Export}
 
 \maketitle
 
