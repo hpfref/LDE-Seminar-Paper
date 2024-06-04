@@ -32,7 +32,7 @@
 
 
 \begin{abstract}
-Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" by Mark Raasveldt and Hannes Muhleisen, addresses this problem by investigating the high cost of transferring large data from databases to the client programs, which can be much more time consuming than the actual query execution. The authors explore and analyse current serialization methods, that are used in database systems and identify their inefficiencies through various experiments. They also introduce a new columnar serialization method that can significantly enhance data transfer performance. By improving the data transfer, this approach could be a step towards efficiently combining database and machine learning systems.
+Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" (DHMDH) by Mark Raasveldt and Hannes Muhleisen, addresses this problem by investigating the high cost of transferring large data from databases to the client programs, which can be much more time consuming than the actual query execution. The authors explore and analyse current serialization methods, that are used in database systems and identify their inefficiencies through various experiments. They also introduce a new columnar serialization method that can significantly enhance data transfer performance. By improving the data transfer, this approach could be a step towards efficiently combining database and machine learning systems.
 \end{abstract}
 
 \keywords{Databases, Client Protocols, Data Export}
@@ -40,10 +40,28 @@ Traditionally, database query processing and ML tasks are executed on separate, 
 \maketitle
 
 \section{Introduction}
-% Your introduction content here
+Having to transfer a lot of data from a database to a client program is a standard procedure when conducting complex machine learning (ML) tasks. The problem is that this transfer process is very slow, especially because database servers are typically not located on the same system as the ML workloads. 
+
+When the DHMDH paper was introduced in 2017 most research in this field, including the authors \cite{raasveldt2016vectorized}, focused on performing computations within the database, avoiding the need for data transfer. Since then a lot of approaches for optimizing the transfer arose, which can be broadly categorized in server-side and client-side optimizations \cite{neueres paper}. Raasveldt and Mühlheisen chose a client-side approach, as they already realized in 2017 that biggest and easiest to implement optimization potential lies in addressing the overhead of (de)serialization of the data. 
+They use the term of result set serialization (RSS), which refers to converting data into a format suitable for transfer and show its significant impact on system performance by using a standard SQL query, sending it through an ODBC connector and then fetching the results for different data management systems. 
+
+Back in the day popular ML tools, including RapidMiner, Weka, R's ML packages, and Python-based toolkits like SciKit-Learn and TensorFlow, only supported bulk data transfer from databases \cite{viele papperpereper}. Therefore, users had to manually load data that was already in a table format into these tools. Because of the mentioned inefficiencies this often resulted in smaller data samples being used, which is generally a bad thing in ML.
+This paper examines existing serialization formats, analyzing their performance across different data sets and network scenarios. It explores the design space of serialization formats through experiments, highlighting different trade-offs in client protocol design.
+
+Key contributions include:
+\begin{itemize}
+  \item Benchmarking current RSS methods, to identify data transfer inefficiencies.
+  \item Investigating techniques for creating efficient serialization methods.
+  \item Proposing a new column-based serialization method with significant performance improvements.
+\end{itemize}
+
+
+
 
 \section{Summary}
-% Your summary content here
+Fazit nochmal labern was impact ist und wie sich anscheinend in database solutions durchsetzen aus mehreren argumenten wenn das tatsächlich der fall ist? kp
+ich glaube sogar nicht so wie sich connector x anhört
+
 
 \section{Analysis}
 % Your analysis content here

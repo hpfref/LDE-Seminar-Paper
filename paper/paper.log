@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  30 MAY 2024 16:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  3 JUN 2024 19:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1001,9 +1001,27 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 8.0pt on input line 40.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 6.2pt on input line 40.
+
+Package natbib Warning: Citation `raasveldt2016vectorized' on page 1 undefined 
+on input line 45.
+
+
+Package natbib Warning: Citation `neueres paper' on page 1 undefined on input l
+ine 45.
+
+
+Package natbib Warning: Citation `viele papperpereper' on page 1 undefined on i
+nput line 48.
+
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 9.0pt on input line 53.
 No file paper.bbl.
 
-Overfull \vbox (2.08142pt too high) has occurred while \output is active []
+Package natbib Warning: There were undefined citations.
+
+
+Package balance Warning: You have called \balance in second column
+(balance)                Columns might not be balanced.
 
 
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
@@ -1029,13 +1047,13 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 78F2CD356933A03733DC75583794B157;387.
  ) 
 Here is how much of TeX's memory you used:
- 20738 strings out of 474370
- 335829 string characters out of 5740535
- 1946754 words of memory out of 5000000
- 42420 multiletter control sequences out of 15000+600000
- 686103 words of font info for 217 fonts, out of 8000000 for 9000
+ 20811 strings out of 474370
+ 337520 string characters out of 5740535
+ 1953754 words of memory out of 5000000
+ 42442 multiletter control sequences out of 15000+600000
+ 696021 words of font info for 260 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,11n,131p,1100b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,11n,131p,1108b,638s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/Li
 nBiolinumT.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /libertine/LinBiolinumTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/font
@@ -1043,10 +1061,11 @@ s/type1/public/libertine/LinBiolinumTBO.pfb><C:/Users/hajap/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/libertine/LinLibertineT.pfb><C:/Users/hajap/AppDa
 ta/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb><C:/Us
 ers/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLiberti
-neTI.pfb>
-Output written on paper.pdf (1 page, 406591 bytes).
+neTI.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx
+/txsys.pfb>
+Output written on paper.pdf (1 page, 422121 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
+ 82 PDF objects out of 1000 (max. 8388607)
  8 named destinations out of 1000 (max. 500000)
- 73777 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 77873 words of extra memory for PDF output out of 89155 (max. 10000000)
 
