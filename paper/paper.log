@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  3 JUN 2024 19:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  6 JUN 2024 00:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1011,61 +1011,85 @@ ine 45.
 
 
 Package natbib Warning: Citation `viele papperpereper' on page 1 undefined on i
-nput line 48.
+nput line 49.
 
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 53.
+(Font)              scaled to size 9.0pt on input line 56.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1.1{C:/Users/hajap/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users
+/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}
+{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_76
+gpa5.enc}
+
+{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_nh
+77jq.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertin
+e/lbtn_7grukw.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips
+/libertine/lbtn_naooyc.enc}]
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 76.
+
 No file paper.bbl.
 
 Package natbib Warning: There were undefined citations.
 
 
-Package balance Warning: You have called \balance in second column
-(balance)                Columns might not be balanced.
+Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 
-
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 9.0pt on input line 103.
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 7.0pt on input line 103.
+[2.2]
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
-) [1.1{C:/Users/hajap/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/User
-s/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc
-}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_7
-6gpa5.enc}
-
-{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_nh
-77jq.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertin
-e/lbtn_7grukw.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips
-/libertine/lbtn_naooyc.enc}] (paper.aux)
+)
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 7.3pt on input line 103.
+ [3.2] (paper.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-04-11>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+LaTeX Warning: Temporary extra page added at the end. Rerun to get it removed.
+
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 78F2CD356933A03733DC75583794B157;387.
+(rerunfilecheck)             Checksum: 5C4D5874FA140DD0A0AD9E9C06DF218C;805.
  ) 
 Here is how much of TeX's memory you used:
- 20811 strings out of 474370
- 337520 string characters out of 5740535
- 1953754 words of memory out of 5000000
- 42442 multiletter control sequences out of 15000+600000
- 696021 words of font info for 260 fonts, out of 8000000 for 9000
+ 20911 strings out of 474370
+ 339908 string characters out of 5740535
+ 1954754 words of memory out of 5000000
+ 42465 multiletter control sequences out of 15000+600000
+ 722261 words of font info for 305 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,11n,131p,1108b,638s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/Li
-nBiolinumT.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/libertine/LinBiolinumTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/font
-s/type1/public/libertine/LinBiolinumTBO.pfb><C:/Users/hajap/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/libertine/LinLibertineT.pfb><C:/Users/hajap/AppDa
-ta/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb><C:/Us
-ers/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLiberti
-neTI.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx
-/txsys.pfb>
-Output written on paper.pdf (1 page, 422121 bytes).
+ 90i,12n,131p,1108b,562s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{page.3} has been referenced but does not exist, rep
+laced by a fixed one
+
+<C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinB
+iolinumT.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/l
+ibertine/LinBiolinumTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/libertine/LinBiolinumTBO.pfb><C:/Users/hajap/AppData/Local/Program
+s/MiKTeX/fonts/type1/public/libertine/LinLibertineT.pfb><C:/Users/hajap/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb><C:/User
+s/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertine
+TI.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/t
+xsys.pfb>
+Output written on paper.pdf (3 pages, 438418 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 8 named destinations out of 1000 (max. 500000)
- 77873 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 104 PDF objects out of 1000 (max. 8388607)
+ 14 named destinations out of 1000 (max. 500000)
+ 92233 words of extra memory for PDF output out of 106986 (max. 10000000)
 
