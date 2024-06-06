@@ -86,9 +86,80 @@ The experiments focused on isolating the duration for RSS and data transfer. The
 \end{table}
 
 \subsection{Network Impact}
-Lorem Ipsum und so ...
+Those experiment we talked about, were conducted with both server and client located on the same machine, so the data transfer time wasn't influenced by network factors. However, network limitations can significantly impact the performance of different client protocols. Low bandwidth makes transferring bytes more costly, favoring compression and smaller protocols, while high latency increases the cost of sending confirmation packets.
+To simulate network limitations, the netem[17] utility was used to create scenarios with restricted bandwidth (0.1 ,1 , 10, 100 ms) and increased latency (10, 100, 1000 Mb/s), and 1 million rows of the lineitem table were transferred. The chosen scenarios seem representative, because they capture the typical range those parameters take in real life, from home network to internet transfers.
 
-\section{Summary}
+Higher latency adds a fixed cost to sending messages, affecting connection establishment but not large result set transfers, at least that was the assumption. Contrary to that, high latency negatively impacted all systems, due to TCP/IP layer acknowledgements, which occur frequently and slow down data transfer.
+%. Contrary to that, high latency negatively impacted all systems from 0,1ms latency to 100ms latency with an factor of up to over 10x
+
+Reduced throughput increases the cost of sending messages based on their size, penalizing protocols that send more data. With lower throughput, protocols that normally perform well, like PostgreSQL or MongoDB, suffer significantly. However, systems that use compression like MySQL+C perform better than the others as the main bottleneck shifts to data transfer, making the cost of (de)compression less significant
+
+\subsection{Result Set Serialization}
+To understand the differences in time and bytes transferred across various database protocols, their data serialization formats were examined. The authors did that by looking at the hexadecimal representations of a tiny sample table of the different protocols. This highlights the actual data versus overhead in the data representations.
+
+\textbf{PostgreSQL}
+\begin{itemize}
+  \item Format: Each row is transferred in a separate message, including total length, number of fields, and field-specific data lengths.
+  \item Overhead: High per-row metadata and redundant information, leading to more bytes transferred.
+  \item Efficiency: Low (de)serialization costs, resulting in quick transfers if network conditions aren't limiting.
+\end{itemize}
+
+\textbf{MySQL}
+\begin{itemize}
+  \item Format: Uses binary encoding for metadata and text for field data. Rows begin with data length, followed by a sequence number and length-prefixed field data.
+  \item Overhead: Sequence numbers are redundant due to TCP guarantees; variable-length integers for field lengths.
+  \item Efficiency: Efficient binary encoding for metadata but larger data size due to text representation of field data.
+\end{itemize}
+
+\textbf{DBMS X}
+\begin{itemize}
+  \item Format: Terse protocol with each row prefixed by a packet header and values preceded by length in bytes.
+  \item Overhead: Uses variable-length integers for lengths; employs a configurable fixed message length for batch transfers.
+  \item Efficiency: Computationally intensive but allows performance optimization through configuration.
+\end{itemize}
+
+\textbf{MonetDB}
+\begin{itemize}
+  \item Format: Text-based serialization transferring ASCII representations of values. Rows are delimited like CSV, with additional formatting characters.
+  \item Overhead: Formatting characters inflate size; conversion between binary and string formats is costly.
+  \item Efficiency: Simple format but expensive in terms of computational resources due to text conversion.
+\end{itemize}
+
+\textbf{Hive}
+\begin{itemize}
+  \item Format: Thrift-based columnar format with serialization for structured messages, including meta data for reassembly.
+  \item Overhead: Verbose serialization with significant space wasted on NULL mask encoding.
+  \item Efficiency: Poor performance in benchmarks due to expensive variable-length encoding for integer columns, despite the columnar format.
+\end{itemize}
+
+%These differences explain why some systems transfer more data and take longer to serialize/deserialize result sets, as seen in the initial experiment. It can be assumed that DB2 and MongoDB weren’t mentioned here, because DB2 should look similar to the other relational DB protocols and MongoDB due to its fundamentally different approach to data storage and serialization.
+%MAYBE HIER lieber den Text mit rein nehmen und representation von den dingern iwie ändern, zum beispiel format kürzen und nur kurz was zu overhead/eficiency in 1-2 stichpunten sagen
+%INSBESONDERE MONGO UND DB2 MISSING REINNEHMEN EIGENTLICH
+
+\section{Protocol Design Space}
+When choosing a protocol design, there is always a core trade-off: computational versus transfer costs. For instance, when computation is negligible, using heavyweight compression techniques like XZ [31] can substantially trim transfer expenses. Conversely, if transfer costs are not a problem, opting for reduced computational overhead, even at the expense of increased data transfer, can speed up the protocol.
+To benchmark all the design choices, they were isolated and tested on 3 datasets:
+\begin{itemize}
+  \item \textbf{lineitem} (TCP-H), resembling real-world data warehouses, features 16 columns without missing values, totaling 7.2GB.
+  \item \textbf{American Community Survey (ACS)} dataset, with 274 columns and 16.1\% missing values, spans 9.1 million rows, totaling 7.0GB [6].
+  \item \textbf{Airline On-Time Statistics} , with 109 columns and 55.2\% missing values, encompasses 10 million rows, totaling 3.6GB [25].
+\end{itemize}
+The objective was to uncover how these design choices shape serialization format performance.
+
+
+\subsection{Protocol Design Choices}
+
+\section{Implementation & Results}
+
+\subsection{MonetDB Implementation}
+
+\subsection{PostgreSQL Implementation}
+
+\subsection{Evaluation}
+
+\section{Conclusion & Future Work}
+
+\subsection{Future Work}
 Fazit nochmal labern was impact ist und wie sich anscheinend in database solutions durchsetzen aus mehreren argumenten wenn das tatsächlich der fall ist? kp
 ich glaube sogar nicht so wie sich connector x anhört
 
