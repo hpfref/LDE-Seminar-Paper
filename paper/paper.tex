@@ -140,26 +140,56 @@ To understand the differences in time and bytes transferred across various datab
 When choosing a protocol design, there is always a core trade-off: computational versus transfer costs. For instance, when computation is negligible, using heavyweight compression techniques like XZ [31] can substantially trim transfer expenses. Conversely, if transfer costs are not a problem, opting for reduced computational overhead, even at the expense of increased data transfer, can speed up the protocol.
 To benchmark all the design choices, they were isolated and tested on 3 datasets:
 \begin{itemize}
-  \item \textbf{lineitem} (TCP-H), resembling real-world data warehouses, features 16 columns without missing values, totaling 7.2GB.
-  \item \textbf{American Community Survey (ACS)} dataset, with 274 columns and 16.1\% missing values, spans 9.1 million rows, totaling 7.0GB [6].
-  \item \textbf{Airline On-Time Statistics} , with 109 columns and 55.2\% missing values, encompasses 10 million rows, totaling 3.6GB [25].
+  \item \textbf{SF10 lineitem}, resembling real-world data warehouses, 16 columns, 60 million rows, no missing values, 7.2GB
+  \item \textbf{American Community Survey (ACS} dataset, 274 columns, 9.1 million rows, 16.1\% missing values, 7.0GB [6].
+  \item \textbf{Airline On-Time Statistics} , 109 columns, 10 million rows, 55.2\% missing values, 3.6GB [25].
 \end{itemize}
-The objective was to uncover how these design choices shape serialization format performance.
+The objective was to uncover how the design choices shape serialization format performance.
 
 
 \subsection{Protocol Design Choices}
+\textbf{Row/Column-wise}. 
+When designing data transfer protocols, there is a fundamental choice between serializing data row-wise or column-wise. Most systems opt for row-wise serialization, aligning with popular database APIs like ODBC and JDBC. However, columnar formats can offer significant advantages, because data stored in a column-wise format compresses much more effectively [1]. Additionally, many data analysis tools, such as R [29] and the Pandas [22], already store data column-based. Using a row-based protocol introduces an unnecessary overhead in those cases.
+Despite its advantages, a pure column-based format requires an entire column to be transferred before moving to the next. If a client requires row-wise data access, it must first read and cache the entire result set, which is impractical for large datasets.
+To address this while keeping the advantages of columnar formats, a vector-based protocol is proposed. In this method, chunks of rows are encoded in a column-based format. This allows the client to cache only the rows of a single chunk, rather than the entire result set.
 
-\section{Implementation & Results}
+\textbf{Chunk Size}.
+Choosing the right chunk size for data transfer is crucial. Larger chunks require more memory, while very small chunks lose the benefits of a columnar protocol. Testing different chunk sizes (2KB to 100MB) with three datasets, both uncompressed and with Snappy compression [14], revealed that small chunk sizes lead to bad perform and low compression ratios. This is because the model becomes more and more row-based up to the point of 2kb chunks where there might be only one row inside a chunk. Optimal performance and compression occurred at around 1MB chunks, indicating that efficient data transfer with a vector-based format doesn't need large memory allocations.
 
+\textbf{Data Compression}.
+Data compression is vital for improving performance on limited network throughput. However, it involves trade-offs between the costs for compression and the achieved compression ratio (how much smaller is data after compression). Lightweight tools like Snappy [14] and LZ4 [7] prioritize fast compression but sacrifice ratio, while heavyweights like XZ [31] compress slowly but to a higher degree. GZIP [10] is a balanced approach.
+The experiment of sending the lineitem table through differently fast networks undermined, that the optimal compression method varies based on the cost of transferring bytes. Lightweight methods suit fast networks where extra bytes are cheap, while slower networks benefit from better ratios despite computational overhead. The problem with the heavyweight compressions is that they really only are better than the others for very slow networks (10Mbit/s) and even then, do not perform well overall. Lightweight compressions are better than no compressions for connections of a gigabit per second downwards.
+It is not feasible to change the compression method with every individual server-client connection speed, which is why the authors decided to go with a simple heuristic: no compression for local connections and lightweight compression for most realistic network scenarios, such as LAN or reasonably high-speed connections.
+
+\textbf{Column-Specific Compression}.
+Column-specific compression methods, such as run-length encoding or delta encoding for numeric columns, should offer higher compression ratios at lower costs than generic compression algorithms, when applied on integer value columns. In experiments transferring only integer columns from the datasets though, binpacking and PFOR [21] (colmn-specific) did not consistently outperform Snappy [14] (generic). In fact they only performed well on lineitem. For ACS these methods performed poorly due to the amount of columns, which led to an overhead of processing small data chunks, and for ontime they struggled with the large value range within the columns. Therefore, the authors decided against the use of column-specific compression. 
+The use of datasets with different characteristics was a great choice by the authors. This made sure their benchmarks are representative and unbiased, so they do not come to false conclusions.
+
+\textbf{Data Serialization}.
+Data serialization for TCP sockets can be achieved through custom or generic methods like Protocol Buffers [13] or Thrift [28]. The authors built a custom format, trying to make it more similar to the actual data storage layout, in order to reduce the computational overhead.
+They conducted experiments transferring the lineitem table and claimed that their custom format “significantly outperforms” Protobuf. This might be true for a local Network, but not for a WAN setting. As the WAN setting is the more common scenario I tend to disagree with the authors on that aspect, at least based on the shown data. Nevertheless, the authors opted for the custom serialization format.
+
+\textbf{String handling}.
+Serializing character strings presents challenges to which there are three main solutions: Null-Termination (string ends with a 0 byte), Length-Prefixing (string is prefixed with its length), and Fixed Width (all strings have maximum string length of column). To evaluate these methods, the authors transferred different string columns from the lineitem table, using both uncompressed and Snappy-compressed protocols:
+\begin{itemize}
+    \item \textbf{Single-Character Column (l\_returnflag):} Fixed-width performed best. Length-prefixing and null-termination had twice the byte transfer of fixed width.
+    \item \textbf{Longer Column (l\_comment):} Fixed-width transferred much more bytes due to padding, leading to higher compression costs. The other methods had comparable performance.
+\end{itemize}
+
+Increasing VARCHAR widths made the fixed-width much worse, despite improved compressibility. Therefore, the authors decided to use fixed width only for a VARCHAR width of 1 and for larger strings they preferred null termination.
+
+
+\section{Implementation \& Results}
+asd
 \subsection{MonetDB Implementation}
-
+asd
 \subsection{PostgreSQL Implementation}
-
+asd
 \subsection{Evaluation}
-
-\section{Conclusion & Future Work}
-
-\subsection{Future Work}
+asd
+\section{Conclusion \& Related Work}
+asd
+\subsection{Related Work}
 Fazit nochmal labern was impact ist und wie sich anscheinend in database solutions durchsetzen aus mehreren argumenten wenn das tatsächlich der fall ist? kp
 ich glaube sogar nicht so wie sich connector x anhört
 
