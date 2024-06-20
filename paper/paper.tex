@@ -32,7 +32,7 @@
 
 
 \begin{abstract}
-Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" (DHMDH) by Mark Raasveldt and Hannes Muhleisen, addresses this problem by investigating the high cost of transferring large data from databases to the client programs, which can be much more time consuming than the actual query execution. The authors explore and analyse current serialization methods, that are used in database systems and identify their inefficiencies through various experiments. They also introduce a new columnar serialization method that can significantly enhance data transfer performance. By improving the data transfer, this approach could be a step towards efficiently combining database and machine learning systems.
+Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" (DHMDH) by Mark Raasveldt and Hannes Muhleisen, addressed this problem by investigating the high cost of transferring large data from databases to the client programs, which can be much more time consuming than the actual query execution. The authors explored and analysed serialization methods, that were used in database systems and identified their inefficiencies through various experiments. They also introduced a new columnar serialization method that significantly enhanced data transfer performance. By improving the data transfer, this approach was a step towards efficiently combining database and machine learning systems.
 \end{abstract}
 
 \keywords{Databases, Client Protocols, Data Export}
@@ -40,17 +40,10 @@ Traditionally, database query processing and ML tasks are executed on separate, 
 \maketitle
 
 \section{Introduction}
-Having to transfer a lot of data from a database to a client program is a standard procedure when conducting complex machine learning (ML) tasks. The problem is that this transfer process is very slow, especially because database servers are typically not located on the same system as the ML workloads. 
+Back in the day popular Machine Learning (ML) tools, including RapidMiner, Weka, R's ML packages, and Python-based toolkits like SciKit-Learn and TensorFlow, only supported bulk data transfer from databases \cite{viele papperpereper}. Therefore, users had to manually load data that was already in a table format into these tools. The problem is that the transfer of such data is very slow, even when both database and ML workloads are located on the same system. To avoid transfer overheads, this often resulted in smaller data samples being used, which is generally a bad thing in ML.
 
-When the DHMDH paper was introduced in 2017 most research in this field, including the authors \cite{raasveldt2016vectorized}, focused on performing computations within the database, avoiding the need for data transfer. Since then a lot of approaches for optimizing the transfer arose, which can be broadly categorized in server-side and client-side optimizations \cite{neueres paper}. Raasveldt and Mühlheisen chose a client-side approach, as they already realized in 2017 that the biggest and easiest to implement optimization potential lies in addressing the overhead of (de)serialization of the data. 
-They use the term of result set serialization (RSS), which refers to converting data into a format suitable for transfer and show its significant impact on system performance by comparing the transfer time of a basic SQL query with different data management systems. 
-%by using a standard SQL query, sending it through an ODBC connector and then fetching the results for different data management systems. 
-
-Back in the day popular ML tools, including RapidMiner, Weka, R's ML packages, and Python-based toolkits like SciKit-Learn and TensorFlow, only supported bulk data transfer from databases \cite{viele papperpereper}. Therefore, users had to manually load data that was already in a table format into these tools. Because of the mentioned inefficiencies this often resulted in smaller data samples being used, which is generally a bad thing in ML.
-% MBY noch bisschen cleaner überleiten
-%This paper examines existing serialization formats, analyzing their performance across different data sets and network scenarios. It explores the design space of serialization formats through experiments, highlighting different trade-offs in client protocol design.
-
-This paper examines state of the art serialization formats and explores the design space of those formats in client protocol design.
+When the DHMDH paper was introduced in 2017 most research in this field, including the authors' \cite{raasveldt2016vectorized}, focused on performing computations within the database, avoiding the need for data transfer. Since then a lot of approaches for optimizing the transfer arose, which can be broadly categorized in server-side and client-side optimizations \cite{neueres paper}. Raasveldt and Mühlheisen chose a client-side approach, as they realized that the biggest and easiest to implement optimization potential lay in addressing the overhead of result set serialization (RSS). RSS refers to converting data into a format suitable for transfer.
+The summarized paper examined state of the art serialization formats and explored the design space of those formats in client protocol design.
 Key contributions include:
 \begin{itemize}
   \item Benchmarking current RSS methods, to identify data transfer inefficiencies.
@@ -60,13 +53,13 @@ Key contributions include:
 
 \section{State of the Art}
 All remote database systems use client protocols to manage communication between server and client. This process begins with an initial authentication and an exchange of meta data. Then the client can send queries to the server. Once the server processes the query, it has to serialize the query data into a result set format, send it over the socket to the client, and then the client deserializes the data to use it.
-As we pointed out, the time spent on these steps is significantly influenced by the design of the result set format. We will now explore the serialization formats used by leading systems and evaluate them.
+As pointed out, the time spent on these steps is significantly influenced by the design of the result set format. We will now dive into the exploration and evaluation of serialization formats used by leading systems in 2017, that were conducted by the authors.
 %Protocols with heavy compression reduce data transfer time but increase serialization and deserialization time. On the other hand, simpler protocols may increase data transfer time but reduce serialization costs.
 
 \subsection{Overview}
 To evaluate the performance of various databases for large result set exports, experiments on systems like MySQL [36], PostgreSQL [32], IBM DB2 [37], "DBMS X", MonetDB [5], Hive [33], and MongoDB [23] were conducted. MySQL's client protocol with GZIP compression ("MySQL+C") was tested separately. Of course there are more database systems, but many of those adopt client protocols from more popular databases to reuse existing implementations. This selection of systems therefore seems representative for the state of the art in 2017.
 
-The experiments focused on isolating the duration for RSS and data transfer. The TPC-H benchmark's SF10 lineitem table was loaded into each database, and data retrieval times were measured using ODBC connectors (JDBC for Hive). Netcat (nc) [12] was used as a baseline for efficient data transfer without any database overheads. The results we can see in Table 1, showed that transferring data as CSV via Netcat was drastically faster than using any tested database system. This undermines that the most time-consuming part was RSS and transfer. MongoDB had the highest overhead due to its document-based style, while MySQL+C transferred the least data due to compression.
+The experiments focused on isolating the duration for RSS and data transfer. The TPC-H benchmark's SF10 lineitem table was loaded into each database, and data retrieval times were measured using ODBC connectors (JDBC for Hive). Netcat [12] was used as a baseline for efficient data transfer without any database overheads. The results we can see in Table 1, showed that transferring data as CSV via Netcat was drastically faster than using any tested database system. This undermined the problem of slow RSS and transfer in general. MongoDB had the highest overhead due to its document-based style, while MySQL+C transferred the least data due to compression.
 
 \begin{table}[h!]
     \centering
@@ -86,7 +79,7 @@ The experiments focused on isolating the duration for RSS and data transfer. The
 \end{table}
 
 \subsection{Network Impact}
-Those experiment we talked about, were conducted with both server and client located on the same machine, so the data transfer time wasn't influenced by network factors. However, network limitations can significantly impact the performance of different client protocols. Low bandwidth makes transferring bytes more costly, favoring compression and smaller protocols, while high latency increases the cost of sending confirmation packets.
+Those experiment were conducted with both server and client located on the same machine, so the data transfer time wasn't influenced by network factors. However, network limitations can significantly impact the performance of different client protocols. Low bandwidth makes transferring bytes more costly, favoring compression and smaller protocols, while high latency increases the cost of sending confirmation packets.
 To simulate network limitations, the netem[17] utility was used to create scenarios with restricted bandwidth (0.1 ,1 , 10, 100 ms) and increased latency (10, 100, 1000 Mb/s), and 1 million rows of the lineitem table were transferred. The chosen scenarios seem representative, because they capture the typical range those parameters take in real life, from home network to internet transfers.
 
 Higher latency adds a fixed cost to sending messages, affecting connection establishment but not large result set transfers, at least that was the assumption. Contrary to that, high latency negatively impacted all systems, due to TCP/IP layer acknowledgements, which occur frequently and slow down data transfer.
@@ -141,13 +134,11 @@ When choosing a protocol design, there is always a core trade-off: computational
 To benchmark all the design choices, they were isolated and tested on 3 datasets:
 \begin{itemize}
   \item \textbf{SF10 lineitem}, resembling real-world data warehouses, 16 columns, 60 million rows, no missing values, 7.2GB
-  \item \textbf{American Community Survey (ACS} dataset, 274 columns, 9.1 million rows, 16.1\% missing values, 7.0GB [6].
-  \item \textbf{Airline On-Time Statistics} , 109 columns, 10 million rows, 55.2\% missing values, 3.6GB [25].
+  \item \textbf{American Community Survey (ACS)} data, 274 columns, 9.1 million rows, 16.1\% missing values, 7.0GB [6].
+  \item \textbf{Airline On-Time Statistics}, 109 columns, 10 million rows, 55.2\% missing values, 3.6GB [25].
 \end{itemize}
-The objective was to uncover how the design choices shape serialization format performance.
+The objective was to uncover how the following design choices shape serialization format performance.
 
-
-\subsection{Protocol Design Choices}
 \textbf{Row/Column-wise}. 
 When designing data transfer protocols, there is a fundamental choice between serializing data row-wise or column-wise. Most systems opt for row-wise serialization, aligning with popular database APIs like ODBC and JDBC. However, columnar formats can offer significant advantages, because data stored in a column-wise format compresses much more effectively [1]. Additionally, many data analysis tools, such as R [29] and the Pandas [22], already store data column-based. Using a row-based protocol introduces an unnecessary overhead in those cases.
 Despite its advantages, a pure column-based format requires an entire column to be transferred before moving to the next. If a client requires row-wise data access, it must first read and cache the entire result set, which is impractical for large datasets.
@@ -163,36 +154,71 @@ It is not feasible to change the compression method with every individual server
 
 \textbf{Column-Specific Compression}.
 Column-specific compression methods, such as run-length encoding or delta encoding for numeric columns, should offer higher compression ratios at lower costs than generic compression algorithms, when applied on integer value columns. In experiments transferring only integer columns from the datasets though, binpacking and PFOR [21] (colmn-specific) did not consistently outperform Snappy [14] (generic). In fact they only performed well on lineitem. For ACS these methods performed poorly due to the amount of columns, which led to an overhead of processing small data chunks, and for ontime they struggled with the large value range within the columns. Therefore, the authors decided against the use of column-specific compression. 
-The use of datasets with different characteristics was a great choice by the authors. This made sure their benchmarks are representative and unbiased, so they do not come to false conclusions.
+The use of datasets with different characteristics was a great choice by the authors. This made sure their benchmarks are representative and unbiased. When using only one or similar datasets, it would have been easy to come to false conclusions on that aspect.
 
 \textbf{Data Serialization}.
 Data serialization for TCP sockets can be achieved through custom or generic methods like Protocol Buffers [13] or Thrift [28]. The authors built a custom format, trying to make it more similar to the actual data storage layout, in order to reduce the computational overhead.
-They conducted experiments transferring the lineitem table and claimed that their custom format “significantly outperforms” Protobuf. This might be true for a local Network, but not for a WAN setting. As the WAN setting is the more common scenario I tend to disagree with the authors on that aspect, at least based on the shown data. Nevertheless, the authors opted for the custom serialization format.
+They conducted experiments transferring the lineitem table and claimed that their custom format “significantly outperforms” Protobuf. This might be true for a local Network, but not for a WAN setting. As the WAN setting is the more common scenario this statement by the authors can be questioned, at least based on the shown data. Nevertheless, they opted for the custom serialization format.
+%we tend to disagree with the authors on that aspect
 
 \textbf{String handling}.
 Serializing character strings presents challenges to which there are three main solutions: Null-Termination (string ends with a 0 byte), Length-Prefixing (string is prefixed with its length), and Fixed Width (all strings have maximum string length of column). To evaluate these methods, the authors transferred different string columns from the lineitem table, using both uncompressed and Snappy-compressed protocols:
 \begin{itemize}
-    \item \textbf{Single-Character Column (l\_returnflag):} Fixed-width performed best. Length-prefixing and null-termination had twice the byte transfer of fixed width.
-    \item \textbf{Longer Column (l\_comment):} Fixed-width transferred much more bytes due to padding, leading to higher compression costs. The other methods had comparable performance.
+    \item \textbf Single-Character Column (l\_returnflag): Fixed-width performed best. Length-prefixing and null-termination had twice the byte transfer of fixed width.
+    \item \textbf Longer Column (l\_comment): Fixed-width transferred much more bytes due to padding, leading to higher compression costs. The other methods had comparable performance.
 \end{itemize}
 
 Increasing VARCHAR widths made the fixed-width much worse, despite improved compressibility. Therefore, the authors decided to use fixed width only for a VARCHAR width of 1 and for larger strings they preferred null termination.
 
 
 \section{Implementation \& Results}
-asd
+Finally, we will have a look at the authors’ client protocol and its performance against state of the art protocols from 2017. 
+
 \subsection{MonetDB Implementation}
-asd
+In MonetDB, the protocol serializes query results into column major chunks, where each chunk has a prefix with the row count. Fixed length columns have no extra prefix, while variable length columns are prefixed with their total byte length for efficient row-wise access. Missing values use special values for their specific domain.
+During authentication, the client sets the maximum chunk size in bytes. This ensures that every chunk fits in a buffer, except for very wide rows. The server adjusts the rows per chunk to stay within this limit and if there are rows that are not fitting, it notifies the client to increase the buffer. By having every chunk inside one buffer, the client can access this data without any unnecessary conversion or copying.
+The data is copied into the buffer in column-wise order or compressed directly into it, depending on the setting. The chunk is then sent to the client, again with the possibility to compress it beforehand. Setting row counts per chunk is normally constant, except for BLOB or CLOB columns, where a scan determines the rows per chunk due to variable row sizes.
+
+% mby hier RSS gegenüberstellen
 \subsection{PostgreSQL Implementation}
-asd
+A big difference to the Monet DB implementation is the handling of missing values: each column is prefixed with a bitmask indicating missing values. Because of this bitmask, fixed length columns from before are now also variable in length, which is why every column is prefixed with its length in the PostgreSQL serialization. This allows the client to skip columns without scanning the data and prevents data transfer for empty rows.
+
+The other difference is that the authors had to transform the data from PostgreSQL’s inherent row-based format into the more efficient column-based format. A challenge when doing so were the null masks, which made it impossible to know the row size in advance. Therefore, data for each column is first copied to a temporary buffer when iterating over the rows and when its full copied to the stream buffer. The potentially inefficient access pattern for converting row-major to column-major format is mitigated by keeping chunks small enough to fit in the L3 cache of a CPU.
+
+
 \subsection{Evaluation}
-asd
+To assess the real-world performance of their protocols, the authors compared them with the state-of-the-art client protocols from chapter 2, using the datasets we introduced in chapter 3. Again, they benchmark this additionally with the transfer of a simple CSV using netcat [12] with different compressions. The experiments were conducted on a Linux VM with 16GB memory and 8 CPU cores. Both the database and the client were running inside this VM. As in chapter 2.2, the netem [17] utility was used to simulate different network scenarios: Local, LAN (1000 Mb/s throughput, 0.3ms latency) and WAN (100 Mbit/s throughput, 25ms latency, 1% packet loss).
+
+\begin{table}[h!]
+    \centering
+    \caption{Results of transferring the SF10 lineitem table for different network configurations.}
+    \begin{tabular}{ l | r  r  r  r }
+    		 & \multicolumn{3}{c}{Timings (s)} &  \\ 
+        \textbf{System} & \textbf{T{\small Local}} & \textbf{T{\small LAN}} & \textbf{T{\small WAN}} &  \textbf{Size (GB)}\\ \hline
+        \textit{(Netcat)} & \textit{(9.8)} & \textit{(62.0)} & \textit{(696.5)} & \textit{(7.21)} \\ 
+        \textit{(Netcat+Sy)} & \textit{(32.3)} & \textit{(32.2)} & \textit{(325.2)} & \textit{(3.55)} \\ 
+        \textit{(Netcat+GZ)} & \textit{(405.4)} & \textit{(425.1)} & \textit{(405.0)} & \textit{(2.16)} \\ 
+        MonetDB++ & \textbf{10.6} & 50.3 & 510.8 & 5.80 \\ 
+        MonetDB++C & 15.5 & \textbf{19.9} & \textbf{200.6} & \textbf{2.27} \\ 
+        Postgres++ & 39.3 & 46.1 & 518.8 & 5.36 \\ 
+        Postgres++C & 42.4 & 43.8 & 229.5 & 2.53 \\ 
+        MySQL & 98.8 & 108.9 & 662.8 & 7.44 \\ 
+        MySQL+C & 380.3 & 379.4 & 367.4 & 2.85 \\ 
+        PostgreSQL & 205.8 & 301.1 & 2108.8 & 10.4 \\ 
+        DB2 & 166.9 & 598.4 & T & 7.32 \\ 
+        DBMS X & 219.9 & 282.3 & T & 6.35 \\ 
+        Hive & 657.1 & 948.5 & T & 8.69 \\ 
+        MonetDB & 222.4 & 256.1 & 1381.5 & 8.97 \\ 
+    \end{tabular}
+\end{table}
+
 \section{Conclusion \& Related Work}
 asd
 \subsection{Related Work}
 Fazit nochmal labern was impact ist und wie sich anscheinend in database solutions durchsetzen aus mehreren argumenten wenn das tatsächlich der fall ist? kp
 ich glaube sogar nicht so wie sich connector x anhört
 
+\section{References}
 
 % References
 \bibliographystyle{ACM-Reference-Format}

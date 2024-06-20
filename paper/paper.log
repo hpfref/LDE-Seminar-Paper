@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  7 JUN 2024 21:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.27)  21 JUN 2024 01:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1002,6 +1002,10 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 6.2pt on input line 40.
 
+Package natbib Warning: Citation `viele papperpereper' on page 1 undefined on i
+nput line 43.
+
+
 Package natbib Warning: Citation `raasveldt2016vectorized' on page 1 undefined 
 on input line 45.
 
@@ -1009,14 +1013,10 @@ on input line 45.
 Package natbib Warning: Citation `neueres paper' on page 1 undefined on input l
 ine 45.
 
-
-Package natbib Warning: Citation `viele papperpereper' on page 1 undefined on i
-nput line 49.
-
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 56.
+(Font)              scaled to size 9.0pt on input line 49.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3009) has occurred while \output is active []
 
  [1.1{C:/Users/hajap/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users
 /hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}
@@ -1028,31 +1028,31 @@ gpa5.enc}
 e/lbtn_7grukw.enc}{C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/enc/dvips
 /libertine/lbtn_naooyc.enc}]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 76.
+(Font)              scaled to size 9.0pt on input line 69.
 
-Overfull \hbox (2.69319pt too wide) in paragraph at lines 118--119
+Overfull \hbox (2.69319pt too wide) in paragraph at lines 111--112
 []\T1/LinuxLibertineT-TLF/m/n/9 (-20) Efficiency: Com-pu-ta-tion-ally in-ten-si
 ve but al-lows per-for-mance
  []
 
 
-Overfull \hbox (1.24689pt too wide) in paragraph at lines 131--132
+Overfull \hbox (1.24689pt too wide) in paragraph at lines 124--125
 []\T1/LinuxLibertineT-TLF/m/n/9 (-20) Overhead: Ver-bose se-ri-al-iza-tion with
  sig-nif-i-cant space wasted
  []
 
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 142.
+(Font)              scaled to size 9.0pt on input line 136.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 142.
+(Font)              scaled to size 7.0pt on input line 136.
 [2.2]
-Overfull \hbox (3.35437pt too wide) in paragraph at lines 151--155
-\T1/LinuxLibertineT-TLF/m/n/9 (-20) is a fun-da-men-tal choice be-tween se-ri-a
-l-iz-ing data row-wise or column-
+Overfull \hbox (1.35876pt too wide) in paragraph at lines 167--168
+\T1/LinuxLibertineT-TLF/m/n/9 (-20) formed best. Length-prefixing and null-term
+ination had twice
  []
 
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
-(Font)              scaled to size 7.0pt on input line 184.
+(Font)              scaled to size 7.0pt on input line 181.
 
 Package fancyhdr Warning: \headheight is too small (13.0pt): 
 (fancyhdr)                Make it at least 23.46098pt, for example:
@@ -1062,12 +1062,18 @@ Package fancyhdr Warning: \headheight is too small (13.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-10.46098pt}.
 
 [3.3]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 No file paper.bbl.
 
 Package natbib Warning: There were undefined citations.
 
 
 Class acmart Warning: CCS concepts are mandatory for papers over two pages.
+
+
+Overfull \vbox (1.624pt too high) has occurred while \output is active []
 
 
 (C:\Users\hajap\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
@@ -1082,16 +1088,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-04-11>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 01E3A42DCC52AE398DA60421DCD622B1;2249.
+(rerunfilecheck)             Checksum: DF3DAA2B2BAC33F585B078B3F9615FBB;2154.
  ) 
 Here is how much of TeX's memory you used:
- 20967 strings out of 474370
- 341121 string characters out of 5740535
- 1954754 words of memory out of 5000000
+ 20965 strings out of 474370
+ 341048 string characters out of 5740535
+ 1955754 words of memory out of 5000000
  42470 multiletter control sequences out of 15000+600000
- 726498 words of font info for 333 fonts, out of 8000000 for 9000
+ 726225 words of font info for 331 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,12n,131p,1108b,642s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,131p,1098b,642s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/Li
 nBiolinumT.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /libertine/LinBiolinumTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/font
@@ -1102,9 +1108,9 @@ rs/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertin
 eTB.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type1/public/libert
 ine/LinLibertineTI.pfb><C:/Users/hajap/AppData/Local/Programs/MiKTeX/fonts/type
 1/public/newtx/txsys.pfb>
-Output written on paper.pdf (4 pages, 503836 bytes).
+Output written on paper.pdf (4 pages, 508848 bytes).
 PDF statistics:
- 142 PDF objects out of 1000 (max. 8388607)
- 22 named destinations out of 1000 (max. 500000)
+ 143 PDF objects out of 1000 (max. 8388607)
+ 23 named destinations out of 1000 (max. 500000)
  92289 words of extra memory for PDF output out of 106986 (max. 10000000)
 
