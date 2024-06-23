@@ -1,0 +1,341 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{25}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Abadi et~al\mbox{.}(2006)]%
+        {abadi2006integrating}
+\bibfield{author}{\bibinfo{person}{D. Abadi}, \bibinfo{person}{S. Madden},
+  {and} \bibinfo{person}{M. Ferreira}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Integrating Compression and Execution in
+  Column-oriented Database Systems}. In \bibinfo{booktitle}{\emph{Proceedings
+  of the 2006 ACM SIGMOD International Conference on Management of Data}}
+  \emph{(\bibinfo{series}{SIGMOD '06})}. \bibinfo{publisher}{ACM},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{671--682}.
+\newblock
+
+
+\bibitem[Arrow(2024)]%
+        {ApacheArrow}
+\bibfield{author}{\bibinfo{person}{Apache Arrow}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{Apache Arrow}.
+\newblock \bibinfo{howpublished}{\url{https://github.com/apache/arrow}}.
+\newblock
+\newblock
+\shownote{Accessed: 2024-06-22}.
+
+
+\bibitem[Boncz et~al\mbox{.}(2008)]%
+        {boncz2008breaking}
+\bibfield{author}{\bibinfo{person}{Peter~A. Boncz}, \bibinfo{person}{Martin~L.
+  Kersten}, {and} \bibinfo{person}{Stefan Manegold}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Breaking the Memory Wall in MonetDB}.
+\newblock \bibinfo{journal}{\emph{Commun. ACM}} \bibinfo{volume}{51},
+  \bibinfo{number}{12} (\bibinfo{date}{December} \bibinfo{year}{2008}),
+  \bibinfo{pages}{77--85}.
+\newblock
+
+
+\bibitem[Collet(2013)]%
+        {lz42013}
+\bibfield{author}{\bibinfo{person}{Yann Collet}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{{LZ4} - Extremely fast compression}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{Unknown}.
+\newblock
+
+
+\bibitem[Fent et~al\mbox{.}(2020)]%
+        {Fent2020LowLatency}
+\bibfield{author}{\bibinfo{person}{Philipp Fent}, \bibinfo{person}{Alexander
+  van Renen}, \bibinfo{person}{Andreas Kipf}, \bibinfo{person}{Viktor Leis},
+  \bibinfo{person}{Thomas Neumann}, {and} \bibinfo{person}{Alfons Kemper}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Low-Latency Communication for Fast DBMS Using RDMA
+  and Shared Memory}. In \bibinfo{booktitle}{\emph{Proceedings of the 2020 IEEE
+  36th International Conference on Data Engineering (ICDE)}}.
+  \bibinfo{publisher}{IEEE}, \bibinfo{address}{Dallas, TX, USA},
+  \bibinfo{pages}{1377--1388}.
+\newblock
+\showISBNx{978-1-7281-2903-7}
+\showISSN{2375-026X}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/ICDE48307.2020.00131}
+\showDOI{\tempurl}
+
+
+\bibitem[Gibson et~al\mbox{.}(2016)]%
+        {gibson2016ncat}
+\bibfield{author}{\bibinfo{person}{C. Gibson}, \bibinfo{person}{K. Katterjohn},
+  \bibinfo{person}{Mixter}, {and} \bibinfo{person}{Fyodor}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{{Ncat Reference Guide}}}.
+\newblock \bibinfo{type}{Technical Report}. \bibinfo{institution}{Nmap
+  Project}.
+\newblock
+
+
+\bibitem[Google(2016)]%
+        {protobuf2016developers}
+\bibfield{author}{\bibinfo{person}{Google}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Protocol Buffers: Developer’s Guide}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{Google}.
+\newblock
+\urldef\tempurl%
+\url{https://developers.google.com/protocol-buffers/docs/overview}
+\showURL{%
+\tempurl}
+
+
+\bibitem[{Google}(2016)]%
+        {snappy2016}
+\bibfield{author}{\bibinfo{person}{{Google}}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Snappy, a fast compressor/decompressor}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{Google}.
+\newblock
+
+
+\bibitem[Hemminger(2005)]%
+        {hemminger2005netem}
+\bibfield{author}{\bibinfo{person}{S. Hemminger}.}
+  \bibinfo{year}{2005}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Network Emulation with NetEm}}.
+\newblock \bibinfo{type}{Technical Report}. \bibinfo{institution}{Open Source
+  Development Lab}.
+\newblock
+
+
+\bibitem[Lemire and Boytsov(2012)]%
+        {lemire2012decoding}
+\bibfield{author}{\bibinfo{person}{Daniel Lemire} {and} \bibinfo{person}{Leonid
+  Boytsov}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Decoding billions of integers per second through
+  vectorization}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1209.2137}
+  (\bibinfo{year}{2012}).
+\newblock
+\urldef\tempurl%
+\url{http://arxiv.org/abs/1209.2137}
+\showURL{%
+\tempurl}
+
+
+\bibitem[loup Gailly(1993)]%
+        {gzip1993}
+\bibfield{author}{\bibinfo{person}{Jean loup Gailly}.}
+  \bibinfo{year}{1993}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{gzip: The data compression program}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}.
+  \bibinfo{institution}{University of Utah}.
+\newblock
+
+
+\bibitem[Mark~Raasveldt(2017)]%
+        {raasveldt2017dhmds}
+\bibfield{author}{\bibinfo{person}{Hannes~Muhleisen Mark~Raasveldt}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Don’t Hold My Data Hostage – A Case For Client
+  Protocol Redesign}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the VLDB Endowment}}
+  \bibinfo{volume}{10}, \bibinfo{number}{10} (\bibinfo{year}{2017}),
+  \bibinfo{pages}{1022--1033}.
+\newblock
+\showISSN{2150-8097}
+\urldef\tempurl%
+\url{https://doi.org/10.14778/3115404.3115408}
+\showDOI{\tempurl}
+\newblock
+\shownote{This work is licensed under the Creative Commons
+  Attribution-NonCommercial-NoDerivatives 4.0 International License. To view a
+  copy of this license, visit
+  \url{http://creativecommons.org/licenses/by-nc-nd/4.0/}. For any use beyond
+  those covered by this license, obtain permission by emailing
+  \url{info@vldb.org}.}.
+
+
+\bibitem[McKinney(2010)]%
+        {mckinney2010data}
+\bibfield{author}{\bibinfo{person}{W. McKinney}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Data Structures for Statistical Computing in
+  {Python}}. In \bibinfo{booktitle}{\emph{Proceedings of the 9th Python in
+  Science Conference}}, \bibfield{editor}{\bibinfo{person}{S.~van~der Walt}
+  {and} \bibinfo{person}{J.~Millman}} (Eds.). \bibinfo{pages}{51--56}.
+\newblock
+
+
+\bibitem[{MongoDB Inc.}(2016)]%
+        {mongodb2016architecture}
+\bibfield{author}{\bibinfo{person}{{MongoDB Inc.}}}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{MongoDB Architecture Guide}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{MongoDB
+  Inc.}
+\newblock
+
+
+\bibitem[Prunicki(2009)]%
+        {prunicki2009apache}
+\bibfield{author}{\bibinfo{person}{A. Prunicki}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Apache Thrift}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{Object
+  Computing, Inc.}
+\newblock
+\urldef\tempurl%
+\url{https://thrift.apache.org/static/files/thrift-200906.pdf}
+\showURL{%
+\tempurl}
+
+
+\bibitem[{R Core Team}(2016)]%
+        {rcore2016}
+\bibfield{author}{\bibinfo{person}{{R Core Team}}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{{R}: A Language and Environment for
+  Statistical Computing}}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria.
+\newblock
+
+
+\bibitem[Raasveldt and M\"uhleisen(2016)]%
+        {raasveldt2016vectorized}
+\bibfield{author}{\bibinfo{person}{Mark Raasveldt} {and}
+  \bibinfo{person}{Hannes M\"uhleisen}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Vectorized UDFs in Column-Stores}.
+\newblock  (\bibinfo{year}{2016}), \bibinfo{pages}{16:1--16:12}.
+\newblock
+
+
+\bibitem[Salomon(2006)]%
+        {salomon2006datacompression}
+\bibfield{author}{\bibinfo{person}{D. Salomon}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Data Compression: The Complete Reference}}.
+\newblock \bibinfo{publisher}{Springer-Verlag New York, Inc.},
+  \bibinfo{address}{Secaucus, NJ, USA}.
+\newblock
+
+
+\bibitem[Stonebraker and Kemnitz(1991)]%
+        {stonebraker1991postgres}
+\bibfield{author}{\bibinfo{person}{Michael Stonebraker} {and}
+  \bibinfo{person}{Gregory Kemnitz}.} \bibinfo{year}{1991}\natexlab{}.
+\newblock \showarticletitle{The POSTGRES Next Generation Database Management
+  System}.
+\newblock \bibinfo{journal}{\emph{Commun. ACM}} \bibinfo{volume}{34},
+  \bibinfo{number}{10} (\bibinfo{date}{October} \bibinfo{year}{1991}),
+  \bibinfo{pages}{78--92}.
+\newblock
+
+
+\bibitem[Thusoo et~al\mbox{.}(2010)]%
+        {thusoo2010hive}
+\bibfield{author}{\bibinfo{person}{Ashish Thusoo}, \bibinfo{person}{Joydeep~Sen
+  Sarma}, \bibinfo{person}{Namit Jain}, {et~al\mbox{.}}}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Hive - a petabyte scale data warehouse using
+  Hadoop}. In \bibinfo{booktitle}{\emph{2010 IEEE 30th International Conference
+  on Data Engineering}}. \bibinfo{pages}{996--1005}.
+\newblock
+
+
+\bibitem[{U.S. Census Bureau}(2014)]%
+        {usc2014americancensus}
+\bibfield{author}{\bibinfo{person}{{U.S. Census Bureau}}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{American Community Survey}}.
+\newblock \bibinfo{type}{Technical Report}.
+\newblock
+
+
+\bibitem[{U.S. Department of Transportation}(2016)]%
+        {dot2016airlineontime}
+\bibfield{author}{\bibinfo{person}{{U.S. Department of Transportation}}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Airline On-Time Statistics and Delay
+  Causes}}.
+\newblock \bibinfo{type}{Technical Report}. \bibinfo{institution}{United States
+  Department of Transportation}.
+\newblock
+
+
+\bibitem[Wang et~al\mbox{.}(2022)]%
+        {wang2022connectorx}
+\bibfield{author}{\bibinfo{person}{Xiaoying Wang}, \bibinfo{person}{Weiyuan
+  Wu}, \bibinfo{person}{Jinze Wu}, \bibinfo{person}{Yizhou Chen},
+  \bibinfo{person}{Nick Zrymiak}, \bibinfo{person}{Changbo Qu},
+  \bibinfo{person}{Lampros Flokas}, \bibinfo{person}{George Chow},
+  \bibinfo{person}{Jiannan Wang}, \bibinfo{person}{Tianzheng Wang},
+  \bibinfo{person}{Eugene Wu}, {and} \bibinfo{person}{Qingqing Zhou}.}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{ConnectorX: Accelerating Data Loading From
+  Databases to Dataframes}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the VLDB Endowment (PVLDB)}}
+  \bibinfo{volume}{15}, \bibinfo{number}{11} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{2994--3003}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.14778/3551793.3551847}
+\showDOI{\tempurl}
+\newblock
+\shownote{Available at: \url{https://github.com/sfu-db/connectorx-bench}}.
+
+
+\bibitem[Widenius and Axmark(2002)]%
+        {widenius2002mysql}
+\bibfield{author}{\bibinfo{person}{Michael Widenius} {and}
+  \bibinfo{person}{David Axmark}.} \bibinfo{year}{2002}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{MySQL Reference Manual}
+  (\bibinfo{edition}{1st} ed.)}.
+\newblock \bibinfo{publisher}{O'Reilly \& Associates, Inc.},
+  \bibinfo{address}{Sebastopol, CA, USA}.
+\newblock
+
+
+\bibitem[Zikopoulos and Melnyk(2001)]%
+        {zikopoulos2001db2}
+\bibfield{author}{\bibinfo{person}{Paul~C. Zikopoulos} {and}
+  \bibinfo{person}{Roman~B. Melnyk}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{{DB2}: The Complete Reference}}.
+\newblock \bibinfo{publisher}{McGraw-Hill Companies}.
+\newblock
+
+
+\end{thebibliography}
