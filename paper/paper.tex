@@ -33,19 +33,50 @@
 
 
 \begin{abstract}
-Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" (DHMDH) by Mark Raasveldt and Hannes Muhleisen, addressed this problem by investigating the high cost of transferring large data from databases to the client programs, which can be much more time consuming than the actual query execution. The authors explored and analysed serialization methods, that were used in database systems and identified their inefficiencies through various experiments. They also introduced a new columnar serialization method that significantly enhanced data transfer performance. By improving the data transfer, this approach was a step towards efficiently combining database and machine learning systems.
+Traditionally, database query processing and ML tasks are executed on separate, dedicated systems, but the current trend goes towards integrated data analysis pipelines that combine both tasks. In state of the art systems, orchestration of those two tasks still is inefficient due to expensive data transfer and missed global optimization potential. The paper we are summarizing, "Don’t Hold My Data Hostage – A Case For Client Protocol Redesign" (DHMDH) by Mark Raasveldt and Hannes Mühleisen, addressed this problem by investigating the high cost of transferring large data from databases to client programs. The authors explored serialization methods and introduced a new client protocol that significantly enhanced data transfer performance, marking a step towards efficiently combining database and machine learning systems.
+%By improving the data transfer, this approach was a step towards efficiently combining database and machine learning systems.
 \end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10002951.10002952</concept_id>
+<concept_desc>Information systems~Data management systems</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010257</concept_id>
+<concept_desc>Computing methodologies~Machine learning</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003227.10003241.10003244</concept_id>
+<concept_desc>Information systems~Data analytics</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10010520.10010521.10010537.10010538</concept_id>
+<concept_desc>Computer systems organization~Client-server architectures</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Data management systems}
+\ccsdesc[300]{Computing methodologies~Machine learning}
+\ccsdesc[300]{Information systems~Data analytics}
+\ccsdesc[500]{Computer systems organization~Client-server architectures}
 
 \keywords{Databases, Client Protocols, Data Export}
 
 \maketitle
 
 \section{Introduction}
-Back in the day popular Machine Learning (ML) tools only supported bulk data transfer from databases. Therefore, users had to manually load data that was already in a table format into these tools. The problem is that the transfer of such data is very slow, even when both database and ML workloads are located on the same system. To avoid transfer overheads, this often resulted in smaller data samples being used, which is generally a bad thing in ML.
+Back in the day popular Machine Learning (ML) tools only supported bulk data transfer from databases. Therefore, users had to manually load data that was already in a table format into these tools. The problem is the slow data transfer from database to client, even when both are located on the same system. This hasn't been fully resolved yet, so to avoid transfer overheads, analysts often use smaller data samples, which is generally a bad thing in ML.
 %, including RapidMiner, Weka, R's ML packages, and Python-based toolkits like SciKit-Learn and TensorFlow,  \cite{viele papperpereper}
 
-When the DHMDH \cite{raasveldt2017dhmds} paper was introduced in 2017 most research in this field, including the authors' \cite{raasveldt2016vectorized}, focused on performing computations within the database, avoiding the need for data transfer. Since then a lot of approaches for optimizing the transfer arose, which can be broadly categorized in server-side and client-side optimizations \cite{wang2022connectorx}. Raasveldt and Mühlheisen chose a client-side approach, as they came to the conclusion that the biggest and easiest to implement optimization potential lay in addressing the overhead of result set serialization (RSS). RSS refers to converting data into a format suitable for transfer.
-The summarized paper examined state of the art serialization formats and explored the design space of those formats in order to develope their own client protocol for RSS.
+When the DHMDH \cite{raasveldt2017dhmds} paper was introduced in 2017 most research in this field, including the authors' \cite{raasveldt2016vectorized}, focused on performing computations within the database, avoiding the need for data transfer. Since then a lot of approaches for optimizing the transfer arose, which can be broadly categorized in server-side and client-side optimizations \cite{wang2022connectorx}. Raasveldt and Mühlheisen chose a client-side approach, as they came to the conclusion that the biggest and easiest to implement optimization potential lay in addressing the overhead of result set (de)serialization (RSS). RSS refers to the conversion of data into a format suitable for transfer.
+The summarized paper examined state of the art serialization formats and explored the design space of those formats in order to develope their own RSS protocol.
 Key contributions include:
 \begin{itemize}
   \item Benchmarking current RSS methods, to identify data transfer inefficiencies.
@@ -59,9 +90,9 @@ As pointed out, the time spent on these steps is significantly influenced by the
 %Protocols with heavy compression reduce data transfer time but increase serialization and deserialization time. On the other hand, simpler protocols may increase data transfer time but reduce serialization costs.
 
 \subsection{Overview}
-To evaluate the performance of various databases for large result set exports, experiments were conducted on the row-based systems MySQL \cite{widenius2002mysql}, PostgreSQL \cite{stonebraker1991postgres}, IBM DB2 \cite{zikopoulos2001db2}, and "DBMS X", as well as on the column-based MonetDB \cite{boncz2008breaking}, and the untraditional systems Hive \cite{thusoo2010hive}, and MongoDB \cite{mongodb2016architecture}. MySQL's client protocol with GZIP compression ("MySQL+C") was tested separately. Of course there are more database systems, but many of those adopt client protocols from more popular databases to reuse existing implementations. This selection of systems therefore seems representative for the state of the art in 2017.
+To evaluate the performance of various databases for large result set exports, experiments were conducted on the row-based systems MySQL \cite{widenius2002mysql}, PostgreSQL \cite{stonebraker1991postgres}, IBM DB2 \cite{zikopoulos2001db2}, and "DBMS X", as well as on the column-based MonetDB \cite{boncz2008breaking}, and the NoSQL systems Hive \cite{thusoo2010hive}, and MongoDB \cite{mongodb2016architecture}. MySQL's client protocol with GZIP compression ("MySQL+C") was tested separately. Of course there were more database systems in the industry, but many of those reused existing client protocols from more popular systems. The authors' selection therefore seems representative for the state of the art in 2017.
 
-The experiments focused on isolating the duration for RSS and data transfer. The TPC-H benchmark's SF10 lineitem table was loaded into each database, and data retrieval times were measured using ODBC connectors (JDBC for Hive). Netcat \cite{gibson2016ncat} was used as a baseline for efficient data transfer without any database overheads. The results we can see in Table 1, showed that transferring data as CSV via Netcat was drastically faster than using any tested database system. This undermined the problem of slow RSS and transfer in general. MongoDB had the highest overhead due to its document-based style, while MySQL+C transferred the least data due to compression.
+The experiments focused on isolating the duration for RSS and data transfer. The TPC-H benchmark's SF10 lineitem table was loaded into each database, and data retrieval times were measured using ODBC connectors (JDBC for Hive). Netcat \cite{gibson2016ncat} was used as a baseline for efficient data transfer without any database overheads. The results in Table 1, showed that transferring data as CSV via Netcat was drastically faster than using any tested database system. This undermined the problem of slow RSS and transfer in general. MongoDB had the highest overhead due to its document-based style, while MySQL+C transferred the least data due to compression.
 
 \begin{table}[h!]
     \centering
@@ -82,20 +113,20 @@ The experiments focused on isolating the duration for RSS and data transfer. The
 
 \subsection{Network Impact}
 Those experiment were conducted with both server and client located on the same machine, so the data transfer time wasn't influenced by network factors. However, network limitations can significantly impact the performance of different client protocols. Low bandwidth makes transferring bytes more costly, favoring compression and smaller protocols, while high latency increases the cost of sending confirmation packets.
-To simulate network limitations, the netem \cite{hemminger2005netem} utility was used to create scenarios with restricted bandwidth (0.1 ,1 , 10, 100 ms) and increased latency (10, 100, 1000 Mb/s), and 1 million rows of the lineitem table were transferred. The chosen scenarios seem representative, because they capture the typical range those parameters take in real life, from home network to internet transfers.
+To simulate network limitations, the netem \cite{hemminger2005netem} utility was used to create scenarios with restricted bandwidth (0.1 ,1 , 10, 100 ms) and increased latency (10, 100, 1000 Mb/s), and 1 million rows of the lineitem table were transferred. The chosen scenarios seem representative, because they capture the typical range those parameters take in practice, from local network to internet transfers.
 
 Higher latency adds a fixed cost to sending messages, affecting connection establishment but not large result set transfers, at least that was the assumption. Contrary to that, high latency negatively impacted all systems, due to TCP/IP layer acknowledgements, which occur frequently and slow down data transfer.
 %. Contrary to that, high latency negatively impacted all systems from 0,1ms latency to 100ms latency with an factor of up to over 10x
 
-Reduced throughput increases the cost of sending messages based on their size, penalizing protocols that send more data. With lower throughput, protocols that normally perform well, like PostgreSQL or MongoDB, suffer significantly. However, systems that use compression like MySQL+C perform better than the others as the main bottleneck shifts to data transfer, making the cost of (de)compression less significant
+Reduced throughput increases the cost of sending messages based on their size, penalizing protocols that send more data. With lower throughput, protocols that normally perform well, like PostgreSQL or MongoDB, suffer significantly. However, systems that use compression like MySQL+C perform better than the others as the main bottleneck shifts to data transfer, making the cost of (de)compression less significant.
 
 \subsection{Result Set Serialization}
-To understand the differences in time and bytes transferred across various database protocols, their data serialization formats were examined. The authors did that by looking at the hexadecimal representations of a tiny sample table of the different protocols. This highlights the actual data versus overhead in the data representations.
+To understand the differences in time and bytes transferred across various database protocols, their data serialization formats were examined. The authors did that by looking at the hexadecimal representations of a tiny sample table of the different protocols. This highlighted the actual data versus the overhead in the serialized data representations.
 
 \begin{itemize}
     \item \textbf{PostgreSQL}.
     Row-based format with high metadata overhead, leading to more bytes transferred. 
-    Efficient (de)serialization and fast transfers if network is not limiting.
+    Efficient (de)serialization and fast transfer if network is not limiting.
     
     \item \textbf{MySQL}.
     Row-based with binary metadata and text for field data with length prefix.
@@ -115,7 +146,7 @@ To understand the differences in time and bytes transferred across various datab
 \end{itemize}
 
 
-Except for Hive all of those use row-major RSS, leading to per row overheads in the row headers. We can assume that the authors didn't mention DB2 and MongoDB here, because DB2 should look similar to the other relational DB protocols and MongoDB due to its fundamentally different approach to data storage and serialization.
+Except for Hive all of those use row-major RSS, leading to per-row overheads in the row headers. We can assume that the authors didn't mention DB2 and MongoDB here, because DB2 should look similar to the other relational DB protocols and MongoDB due to its fundamentally different approach to data storage and serialization.
 
 
 \section{Protocol Design Space}
@@ -129,54 +160,56 @@ To benchmark all the design choices, they were isolated and tested on 3 datasets
 The objective was to uncover how the following design choices shape serialization format performance.
 
 \textbf{Row/Column-wise}. 
-When designing data transfer protocols, there is a fundamental choice between serializing data row-wise or column-wise. Most systems opt for row-wise serialization, aligning with popular database APIs like ODBC and JDBC. However, columnar formats can offer significant advantages, because data stored in a column-wise format compresses much more effectively \cite{abadi2006integrating}. Additionally, many data analysis tools, such as R \cite{rcore2016} and the Pandas \cite{mckinney2010data}, already store data column-based. Using a row-based protocol introduces an unnecessary overhead in those cases.
+When designing data transfer protocols, there is a fundamental choice between serializing data row-wise or column-wise. Most systems opt for row-wise serialization, aligning with popular database APIs like ODBC and JDBC. However, columnar formats can offer significant advantages, because data stored in a column-wise format compresses much more effectively \cite{abadi2006integrating}. Additionally, many data analysis tools, such as R \cite{rcore2016} and Pandas \cite{mckinney2010data}, already store data column-based. Using a row-based protocol introduces an unnecessary overhead in those cases.
 Despite its advantages, a pure column-based format requires an entire column to be transferred before moving to the next. If a client requires row-wise data access, it must first read and cache the entire result set, which is impractical for large datasets.
 To address this while keeping the advantages of columnar formats, a vector-based protocol is proposed. In this method, chunks of rows are encoded in a column-based format. This allows the client to cache only the rows of a single chunk, rather than the entire result set.
 
 \textbf{Chunk Size}.
-Choosing the right chunk size for data transfer is crucial. Larger chunks require more memory, while very small chunks lose the benefits of a columnar protocol. Testing different chunk sizes (2KB to 100MB) with three datasets, both uncompressed and with Snappy \cite{snappy2016} compression, revealed that small chunk sizes lead to bad perform and low compression ratios. This is because the model becomes more and more row-based up to the point of 2kb chunks where there might be only one row inside a chunk. Optimal performance and compression occurred at around 1MB chunks, indicating that efficient data transfer with a vector-based format doesn't need large memory allocations.
+Choosing the right chunk size for data transfer is crucial. Larger chunks require more memory, while very small chunks lose the benefits of a columnar protocol. Testing different chunk sizes (2KB to 100MB) with three datasets, both uncompressed and with Snappy \cite{snappy2016} compression, revealed that small chunk sizes lead to bad performance and low compression ratios. This is because the model becomes more and more row-based up to the point of 2kb chunks where there might be only one row inside a chunk. Optimal performance and compression occurred at around 1MB chunks, indicating that efficient data transfer with a vector-based format doesn't need large memory allocations.
 
 \textbf{Data Compression}.
-Data compression is vital for improving performance on limited network throughput. However, it involves trade-offs between the costs for compression and the achieved compression ratio (how much smaller is data after compression). Lightweight tools like Snappy and LZ4 \cite{lz42013} prioritize fast compression but sacrifice ratio, while heavyweights like XZ compress slowly but to a higher degree. GZIP \cite{gzip1993} is a balanced approach.
-The experiment of sending the lineitem table through differently fast networks undermined, that the optimal compression method varies based on the cost of transferring bytes. Lightweight methods suit fast networks where extra bytes are cheap, while slower networks benefit from better ratios despite computational overhead. The problem with the heavyweight compressions is that they really only are better than the others for very slow networks (10Mbit/s) and even then, do not perform well overall. Lightweight compressions are better than no compressions for connections of a gigabit per second downwards.
-It is not feasible to change the compression method with every individual server-client connection speed, which is why the authors decided to go with a simple heuristic: no compression for local connections and lightweight compression for most realistic network scenarios, such as LAN or reasonably high-speed connections.
+Data compression is vital for improving performance on limited network throughput. However, it involves trade-offs between the costs for compression and the achieved compression ratio (how much smaller the data is after compression). Lightweight tools like Snappy and LZ4 \cite{lz42013} prioritize fast compression but sacrifice ratio, while heavyweights like XZ compress slowly but to a higher degree. GZIP \cite{gzip1993} is a balanced approach.
+The experiments of sending the (compressed) lineitem table through differently fast networks undermined, that the optimal compression method varies based on the cost of transferring bytes. They showed that heavyweight compression is only better for very slow networks (10Mbit/s) and even then, it did not perform well overall. Lightweight compression was better than no compression for a connection speed of a gigabit per second and downwards.
+The authors argued that it is not feasible to change the compression method individually with every differing connection speed, which is why they  decided to go with a simple heuristic: no compression for transfer on the same machine and lightweight compression for any other network scenario.
+
 
 \textbf{Column-Specific Compression}.
-Column-specific compression methods, such as run-length encoding or delta encoding for numeric columns, should offer higher compression ratios at lower costs than generic compression algorithms, when applied on integer value columns. In experiments transferring only integer columns from the datasets though, binpacking and PFOR \cite{lemire2012decoding} (colmn-specific) did not consistently outperform Snappy (generic). In fact they only performed well on lineitem. For ACS these methods performed poorly due to the amount of columns, which led to an overhead of processing small data chunks, and for ontime they struggled with the large value range within the columns. Therefore, the authors decided against the use of column-specific compression. 
-The use of datasets with different characteristics was a great choice by the authors. This made sure their benchmarks are representative and unbiased. When using only one or similar datasets, it would have been easy to come to false conclusions on that aspect.
+Column-specific compression methods, such as run-length encoding or delta encoding for numeric columns, should offer higher compression ratios at lower costs than generic compression algorithms, when applied on integer value columns. In experiments transferring only integer columns from the datasets though, binpacking and PFOR \cite{lemire2012decoding} (column-specific) did not consistently outperform Snappy (generic). In fact they only performed well on lineitem. For ACS these methods performed poorly due to the amount of columns, which led to an overhead of processing small data chunks, and for ontime they struggled with the large value range within the columns. Therefore, the authors decided against the use of column-specific compression. 
+The use of datasets with different characteristics was a great choice by the authors. This made sure their benchmarks are representative and unbiased. When using only one or similar datasets, it would have been easy to come to false conclusions in this section.
 
 \textbf{Data Serialization}.
 Data serialization for TCP sockets can be achieved through custom or generic methods like Protocol Buffers \cite{protobuf2016developers} or Thrift \cite{prunicki2009apache}. The authors built a custom format, trying to make it more similar to the actual data storage layout, in order to reduce the computational overhead.
-They conducted experiments transferring the lineitem table and claimed that their custom format “significantly outperforms” Protobuf. This might be true for a local Network, but not for a WAN setting. As the WAN setting is very a common scenario this statement by the authors can be questioned, at least based on the shown data. Nevertheless, they opted for the custom serialization format.
+They conducted experiments transferring the lineitem table and claimed that their custom format “significantly outperforms” Protobuf. This might be true for a local Network, but not for a WAN setting. As the WAN setting is a common scenario, this statement by the authors can be questioned, at least based on their presented data. Nevertheless, they opted for the custom serialization format.
 
 \textbf{String handling}.
-Serializing character strings presents challenges to which there are three main solutions: Null-Termination (string ends with a 0 byte), Length-Prefixing (string is prefixed with its length), and Fixed Width (all strings have maximum string length of column). To evaluate these methods, the authors transferred different string columns from the lineitem table, using both uncompressed and Snappy-compressed protocols:
+Serializing character strings presents challenges to which there are three main solutions: Null-Termination (string ends with a 0 byte), Length-Prefixing (string is prefixed with its length), and Fixed-Width (all strings have maximum string length of column). To evaluate these methods, the authors transferred different string columns from the lineitem table, using both uncompressed and Snappy-compressed protocols:
 \begin{itemize}
-    \item Single-Character Column (l\_returnflag): Fixed-width performed best. Length-prefixing and null-termination had twice the byte transfer of fixed width.
+    \item Single-Character Column (l\_returnflag): Fixed-width performed best. Length-prefixing and null-termination had twice the byte transfer of fixed-width.
     \item Longer Column (l\_comment): Fixed-width transferred much more bytes due to padding, leading to higher compression costs. The other methods had comparable performance.
 \end{itemize}
 
-Increasing VARCHAR widths made the fixed-width much worse, despite improved compressibility. Therefore, the authors decided to use fixed width only for a VARCHAR width of 1 and for larger strings they preferred null termination.
+Increasing VARCHAR widths made the fixed-width much worse, despite improved compressibility. Therefore, the authors decided to use fixed-width only for a VARCHAR width of 1 and for larger strings they preferred null termination.
 
 
 \section{Implementation and Results}
+Finally, we will have a look at the authors’ client protocol and its performance against state of the art protocols from 2017. 
 
 \subsection{MonetDB Implementation}
-In MonetDB, the protocol serializes query results into column major chunks, where each chunk has a prefix with the row count. Fixed length columns have no extra prefix, while variable length columns are prefixed with their total byte length for efficient row-wise access. Missing values use special values for their specific domain.
-During authentication, the client sets the maximum chunk size in bytes. This ensures that every chunk fits in a buffer, except for very wide rows. The server adjusts the rows per chunk to stay within this limit and if there are rows that are not fitting, it notifies the client to increase the buffer. By having every chunk inside one buffer, the client can access this data without any unnecessary conversion or copying.
-The data is copied into the buffer in column-wise order or compressed directly into it, depending on the settings. The chunk is then sent to the client, again with the possibility to compress it beforehand. Setting row counts per chunk is normally constant, except for BLOB or CLOB columns, where a scan determines the rows per chunk due to variable row sizes.
+In MonetDB, the protocol serializes query results into column-major chunks, where each chunk has a prefix with the row count. Fixed length columns have no extra prefix, while variable length columns are prefixed with their total byte length for efficient row-wise access. Missing values are encoded domain specific.
+During authentication, the client sets the maximum chunk size in bytes. This ensures that every chunk fits inside a buffer, except for very wide rows. The server adjusts the rows per chunk to stay within this limit and if there are rows that are not fitting, it notifies the client to increase the buffer. By having every chunk inside of one buffer, the client can access this data without any unnecessary conversion.
+The data is copied into the buffer in column-wise order or compressed directly into it, depending on the settings. The chunk is then sent to the client, again with the possibility to compress it beforehand. Setting the row counts per chunk is normally constant, except for BLOB or CLOB columns, where a scan determines the rows per chunk due to variable row sizes.
 
 \subsection{PostgreSQL Implementation}
-A big difference to the Monet DB implementation is the handling of missing values: each column is prefixed with a bitmask indicating missing values. Because of this bitmask, fixed length columns from before are now also variable in length, which is why every column is prefixed with its length in the PostgreSQL serialization. This allows the client to skip columns without scanning the data and prevents data transfer for empty rows.
+A big difference to the MonetDB implementation is the handling of missing values. Here, each column is prefixed with a bitmask indicating them. Because of this bitmask, fixed length columns from before are now also variable in length, which is why every column is prefixed with its length in the PostgreSQL serialization. This allows the client to skip columns without scanning the data and prevents data transfer for empty rows.
 
-The other difference is that the authors had to transform the data from PostgreSQL’s inherent row-based format into the more efficient column-based format. A challenge when doing so were the null masks, which made it impossible to know the row size in advance. Therefore, data for each column is first copied to a temporary buffer when iterating over the rows and when its full copied to the stream buffer. The potentially inefficient access pattern for converting row-major to column-major format is mitigated by keeping chunks small enough to fit in the L3 cache of a CPU.
+The other difference is that the authors had to transform the data from PostgreSQL’s inherent row-based format into a column-based format, which MonetDB already uses. A challenge when doing so were the null masks, which made it impossible to know the row sizes in advance. Therefore, data for each column is first copied to a temporary buffer when iterating over the rows and when its full, copied to the stream buffer. The potentially inefficient access pattern for converting row-major to column-major format can be mitigated by keeping chunks small enough to fit in the L3 cache.
 
 
 \subsection{Evaluation}
 To assess the real-world performance of their protocols, the authors compared them with the protocols introduced in chapter 2, using the datasets we introduced in chapter 3. Again, they benchmark this additionally with the transfer of a simple CSV using netcat with different compressions. The experiments were conducted on a Linux VM with 16GB memory and 8 CPU cores. Both the database and the client were running inside this VM. As in chapter 2.2, the netem utility was used to simulate different network scenarios: Local, LAN (1000 Mb/s throughput, 0.3ms latency) and WAN (100 Mbit/s throughput, 25ms latency, 1\% packet loss).
 
 \textbf{Lineitem Dataset}.
-The results for the lineitem experiment are shown in Table 2, where the custom protocols are labeled as MonetDB++ and PostgreSQL++, with an appending C indicating an additional compression. We can see that the uncompressed MonetDB++ protocol performed best locally and the compressed version in LAN and WAN scenarios. Due to the transformation from row to column format PostgreSQL++ performed a bit worse. Both implementations also transferred less data than the others, because they exploit the fact that lineitem has no missing values, as explained in the last two sections. Furthermore, MySQL's heavy compression method dominated transfer times, resulting in no significant change with worse network settings. A similar trend can be seen for the other systems, because they transfer data interleaved with expensive RSS. On the other hand, even with lighter compressions the authors protocols transferred less data and degraded much more with network limitations, because they are bottlenecked by the network and not by slow RSS or compression. 
+The results for the lineitem experiment are shown in Table 2, where the custom protocols are labeled as MonetDB++ and PostgreSQL++, with an appending C indicating an additional compression. We can see that the uncompressed MonetDB++ protocol performed best locally and the compressed version in LAN and WAN scenarios. Due to the transformation from row to column format PostgreSQL++ performed a bit worse. Both implementations also transferred less data than the others, because they can exploit the fact that lineitem has no missing values, as explained in the last two sections. Furthermore, MySQL's heavy compression method dominated transfer times, resulting in no significant change with worse network settings. A similar trend can be seen for the other systems, because they transfer data interleaved with expensive RSS. On the other hand, even with lighter compressions the authors protocols transferred less data and degraded much more with network limitations, because they are bottlenecked by the network and not by slow RSS or compression. 
 
 
 \begin{table}[h!]
@@ -202,24 +235,26 @@ The results for the lineitem experiment are shown in Table 2, where the custom p
     \end{tabular}
 \end{table}
 
-\textbf{ACS Dataset}. For the ACS data, MonetDB++ performed best locally, and MonetDB++C performed best under network limitations. PostgreSQL++ though, transferred less data overall due to the many NULL values, performing better in the WAN scenario. Due to smaller integer values, MySQL's text protocol was more efficient here and PostgreSQL performed poorly with its fixed field length. 
+\textbf{ACS Dataset}. For the ACS data, MonetDB++ performed best locally, and MonetDB++C performed best under network limitations. PostgreSQL++C though, transferred less data overall due to the many NULL values, performing better in the WAN scenario. Due to smaller integer values, MySQL's text protocol was more efficient here and PostgreSQL performed poorly with its fixed field length. 
 
-\textbf{Ontime Dataset}. With the ontime dataset, where over half the values are missing, PostgreSQL++ transferred significantly less data, but MonetDB++(C) performed best and compressed better. MySQL achieved the best compression with GZIP but performed worse overall due to the costly compression. 
+\textbf{Ontime Dataset}. With the ontime dataset, where over half the values are missing, PostgreSQL++ transferred significantly less data, but MonetDB++(C) performed best and compressed better. MySQL achieved the best compression with GZIP but performed worse overall due to its high computational costs. 
 
-Overall, the final experiments seem well constructed and representative, as the authors showed their results for three different datasets and implemented their protocol for both a column-major and a row-major system. Considering the rising importance of non-relational databases, it might have been interesting to see how those, beyond Hive, would perform in the experiments and whether the protocol of the authors can be applied there.
+Overall, the final experiments seem well constructed and representative, as the authors showed their results for three different datasets and implemented their protocol for both a column-major and a row-major system. Considering the rising importance of non-relational databases, it might have been interesting to see how those, beyond Hive, would perform in the experiments and whether the authors' protocol can be applied there.
 
-\section{Conclusion and Related Work}
-In this paper, we summarized the authors’ exploration of costly data export from databases, which they mainly attributed to expensive (de)serialization in existing client protocols. These protocols, designed for older network conditions and OLTP use cases, have not evolved with the needs for larger data volumes and integrated DB and ML workloads. After analyzing the deficiencies of state-of-the-art protocols, they developed a new client protocol implemented in PostgreSQL and MonetDB. The evaluations showed a significant outperformance of their protocol against existing solutions.
+\section{Related Work}
+The DHMDH paper can be understood as part of the groundwork for efficiently combining database and machine learning systems, as it has been cited in various subsequent studies and publications.
+%The impact of Raasveldt and Mühleisen's work has been significant in the field of client-database interactions and client protocol design. The DHMDH paper in specific can be understood as part of the groundwork for later approaches, as it has been cited in various subsequent studies and publications. 
 
-The impact of Raasveldt and Mühleisen's work has been significant in the field of client-database interactions and client protocol design. The DHMDH paper in specific can be understood as part of the groundwork for later approaches, as it has been cited in various subsequent studies and publications. 
-
-A great example for that would be ConnectorX \cite{wang2022connectorx}, “the fastest library for loading data from DB to DataFrames in Rust and Python”. The authors of ConnectorX cite "Don't Hold My Data Hostage" as a key reference and build on its ideas by implementing an efficient conversion to dataframes and other advanced techniques like parallel processing of queries, just as Raasveldt and Mühleisen proposed in their Future Work section. 
+A great example for that would be ConnectorX \cite{wang2022connectorx}, “the fastest library for loading data from DB to DataFrames in Rust and Python”. The founders of ConnectorX cite "Don't Hold My Data Hostage" as a key reference and build on its ideas by implementing an efficient conversion to dataframes and other advanced techniques like parallel processing of queries, just as Raasveldt and Mühleisen proposed in their Future Work section. 
 %In the introduction we mentioned the limitations of many ML tools to bulk transfer only. ConnectorX also solves this by 
 %Tools like ConnectorX are also resolving the limitation manual data loading
 
 One of the most important findings was the efficiency of columnar formats, when row wise access isn’t frequently needed. This doesn’t only apply to serialization but also to analytical processing, which is why column-major data science frameworks like Apache Arrow \cite{ApacheArrow} rose in popularity in recent years. Arrow is used for example within ConnectorX for its efficient data representation.
 
-As we have seen, network conditions were a huge bottleneck for the client protocol of Raasveldt and Mühleisen. A research team from “Technische Universität München” directly addressed these findings and proposed L5 \cite{Fent2020LowLatency}, a high-performance communication layer for database systems that improves both throughput and latency. When combining this modernized network protocol and the improved serialization protocols great results are to be expected. 
+As we have seen, network conditions were a huge bottleneck for the authors' client protocol. A research team from Technische Universität München directly addressed these findings and proposed L5 \cite{Fent2020LowLatency}, a high-performance communication layer for database systems that improves both throughput and latency. When combining this network protocol with the improved serialization protocol great results are to be expected. 
+
+\section{Conclusion}
+In this paper, we summarized the authors’ exploration of costly data export from databases, which they mainly attributed to expensive (de)serialization. When the paper got published, existing protocols, designed for older network conditions and OLTP use cases, have not evolved with the needs for larger data volumes and integrated DB and ML workloads. After analyzing the deficiencies of state-of-the-art protocols, they developed a new client protocol implemented in PostgreSQL and MonetDB, which significantly outperformaned existing solutions. 
 
 % References
 \bibliographystyle{ACM-Reference-Format}
